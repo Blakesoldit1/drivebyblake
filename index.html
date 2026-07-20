@@ -206,6 +206,17 @@
 
   .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
   a:focus-visible,button:focus-visible{outline:3px solid var(--blue-bright);outline-offset:2px;}
+
+  /* copy toast */
+  .toast{
+    position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--dark);color:#fff;border:1px solid rgba(22,96,240,.4);
+    padding:14px 24px;border-radius:999px;font-size:14px;font-weight:700;
+    box-shadow:0 12px 32px -10px rgba(7,9,14,.7);
+    opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none;
+    white-space:nowrap;z-index:200;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
@@ -370,7 +381,7 @@
     </div>
     <div class="gallery-grid">
       <div class="gallery-card reveal" data-cap="Delivery day, in the books.">
-        <img src="images/sold-02.jpg" alt="Blake's team with a smiling couple in front of their newly delivered SUV">
+        <img src="images/sold-01.jpg" alt="Blake's team with a smiling couple in front of their newly delivered SUV">
         <span class="gallery-tag">Delivered</span>
         <div class="gallery-cap">Delivery day, in the books.</div>
       </div>
@@ -622,6 +633,42 @@
   document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('open'));
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('open'); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+
+  // smart SMS buttons: open SMS on mobile, copy number on desktop
+  const BLAKE_NUMBER = '9543101052';
+  const BLAKE_DISPLAY = '954-310-1052';
+
+  // add toast element
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.setAttribute('role', 'status');
+  toast.setAttribute('aria-live', 'polite');
+  document.body.appendChild(toast);
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || ('ontouchstart' in window);
+  }
+
+  document.querySelectorAll('a[href^="sms:"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      if (!isMobile()) {
+        e.preventDefault();
+        navigator.clipboard.writeText(BLAKE_DISPLAY).then(() => {
+          showToast('📋 ' + BLAKE_DISPLAY + ' copied — text Blake from your phone!');
+        }).catch(() => {
+          showToast('Text Blake at ' + BLAKE_DISPLAY);
+        });
+      }
+      // on mobile: let the sms: link open naturally
+    });
+  });
 
   // pre-qualify form -> prefilled text to Blake
   const pqForm = document.getElementById('pqForm');
