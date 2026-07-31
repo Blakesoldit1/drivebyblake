@@ -182,8 +182,14 @@
   .pq-error{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#c0392b;margin-top:12px;}
   .pq-error[hidden]{display:none;}
   .pq-confirm[hidden]{display:none;}
-  .pq-fallback{margin-top:24px;font-size:13.5px;color:var(--text-muted);}
-  .pq-fallback a{color:var(--text);font-weight:700;text-decoration:underline;}
+  .pq-fallback{margin-top:16px;font-size:13px;color:var(--text-muted);}
+  .pq-fallback a{color:var(--blue);font-weight:700;}
+  .pq-radio-group{display:flex;gap:24px;margin-top:6px;}
+  .pq-radio{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;}
+  .pq-radio input{accent-color:var(--blue);width:16px;height:16px;cursor:pointer;}
+  .pq-file-note{font-size:12px;color:var(--text-muted);margin-top:5px;display:block;}
+  .pq-field input[type="file"]{padding:8px 10px;font-size:13px;cursor:pointer;}
+  .pq-cosigner-fields{display:none;}
   @media(max-width:700px){.pq-grid{grid-template-columns:1fr;}.pq-card{padding:22px;}}
 
   /* CONTACT — dark navy */
@@ -431,115 +437,287 @@
 <section id="prequalify" class="prequalify">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Zero Obligation</span>
-      <h2>Get Pre-Qualified. No Hassle.</h2>
-      <p>Fill this out and Blake texts you back personally. No hard pull, no SSN required — just the basics to get you pointed in the right direction.</p>
+      <span class="eyebrow">Zero Obligation · All Credit Profiles Welcome</span>
+      <h2>Get Pre-Qualified in 2 Minutes.</h2>
+      <p>Tell Blake what you're looking for and he'll find exactly which programs, rates, and incentives you qualify for — before you ever step into a dealership.</p>
     </div>
 
-    <form class="pq-card reveal" id="pqForm">
+    <form class="pq-card reveal" id="pqForm" enctype="multipart/form-data">
       <input type="hidden" name="access_key" value="56f5a278-c6fc-4581-9dd7-e3b62dff57e3">
       <input type="hidden" name="subject" value="New Pre-Qualification Request — Blake Soldit">
       <input type="hidden" name="from_name" value="DriveByBlake.com">
       <input type="hidden" name="redirect" value="false">
+
       <div class="pq-promise">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4z"/></svg>
-        No SSN required up front. No hard credit pull. Blake reviews this personally and texts you back.
+        Your information is encrypted and never sold. Blake responds within 1 business hour. Zero pressure, zero obligation.
       </div>
 
+      <!-- YOUR INFORMATION -->
       <div class="pq-group">
-        <div class="pq-group-label">Your Info</div>
+        <div class="pq-group-label">Your Information</div>
         <div class="pq-grid">
           <div class="pq-field">
-            <label for="pq-name">First Name *</label>
-            <input type="text" id="pq-name" name="pq-name" required autocomplete="given-name">
+            <label for="pq-firstname">First Name *</label>
+            <input type="text" id="pq-firstname" name="First Name" required autocomplete="given-name">
           </div>
           <div class="pq-field">
-            <label for="pq-phone">Phone *</label>
-            <input type="tel" id="pq-phone" name="pq-phone" required autocomplete="tel" placeholder="954-555-0123">
+            <label for="pq-lastname">Last Name</label>
+            <input type="text" id="pq-lastname" name="Last Name" autocomplete="family-name">
+          </div>
+          <div class="pq-field">
+            <label for="pq-email">Email</label>
+            <input type="email" id="pq-email" name="Email" autocomplete="email">
+          </div>
+          <div class="pq-field">
+            <label for="pq-phone">Phone / Text *</label>
+            <input type="tel" id="pq-phone" name="Phone" required autocomplete="tel" placeholder="954-555-0123">
+          </div>
+          <div class="pq-field">
+            <label for="pq-dob">Date of Birth</label>
+            <input type="date" id="pq-dob" name="Date of Birth">
+          </div>
+          <div class="pq-field">
+            <label for="pq-dl">Driver's License #</label>
+            <input type="text" id="pq-dl" name="Drivers License Number" placeholder="e.g. D123-456-78-910-0">
+          </div>
+          <div class="pq-field">
+            <label for="pq-ssn">Social Security Number</label>
+            <input type="text" id="pq-ssn" name="Social Security Number" placeholder="XXX-XX-XXXX" autocomplete="off">
+          </div>
+          <div class="pq-field">
+            <label for="pq-housing">Housing Status</label>
+            <select id="pq-housing" name="Housing Status">
+              <option value="">— Select —</option>
+              <option>Rent</option>
+              <option>Mortgage (Own)</option>
+              <option>Live with Relatives</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="pq-field">
+            <label for="pq-contact">Best Way to Reach You</label>
+            <select id="pq-contact" name="Best Way to Reach">
+              <option value="">— Select —</option>
+              <option>Text (fastest)</option>
+              <option>Email</option>
+              <option>Phone Call</option>
+            </select>
+          </div>
+          <div class="pq-field full">
+            <label for="pq-address">Home Address *</label>
+            <input type="text" id="pq-address" name="Home Address" required autocomplete="street-address" placeholder="123 Main St">
+          </div>
+          <div class="pq-field">
+            <label for="pq-city">City *</label>
+            <input type="text" id="pq-city" name="City" required autocomplete="address-level2">
+          </div>
+          <div class="pq-field">
+            <label for="pq-state">State *</label>
+            <select id="pq-state" name="State" required>
+              <option value="">— Select —</option>
+              <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+              <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+              <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+              <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+              <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+              <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+              <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+              <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+              <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+              <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+            </select>
+          </div>
+          <div class="pq-field">
+            <label for="pq-zip">ZIP Code *</label>
+            <input type="text" id="pq-zip" name="ZIP Code" required autocomplete="postal-code" placeholder="33301">
+          </div>
+          <div class="pq-field full">
+            <label for="pq-dl-upload">Upload Driver's License (front) — optional but recommended</label>
+            <input type="file" id="pq-dl-upload" name="Drivers License Upload" accept=".jpg,.jpeg,.png,.pdf">
+            <span class="pq-file-note">📎 Accepted: JPG, PNG, PDF — max 5MB. Securely transmitted.</span>
           </div>
         </div>
       </div>
 
+      <!-- VEHICLE -->
       <div class="pq-group">
-        <div class="pq-group-label">Vehicle &amp; Budget</div>
+        <div class="pq-group-label">Vehicle You Want</div>
         <div class="pq-grid">
+          <div class="pq-field full">
+            <label for="pq-vehicle">Make &amp; Model</label>
+            <input type="text" id="pq-vehicle" name="Vehicle Make and Model" placeholder="e.g. Toyota Camry, or 'not sure yet'">
+          </div>
           <div class="pq-field">
-            <label for="pq-vehicle">Make / Model You Want</label>
-            <input type="text" id="pq-vehicle" name="pq-vehicle" placeholder="e.g. Toyota Camry, or 'not sure yet'">
+            <label for="pq-condition">New or Pre-Owned</label>
+            <select id="pq-condition" name="New or Pre-Owned">
+              <option value="">— Select —</option>
+              <option>New</option>
+              <option>Certified Pre-Owned</option>
+              <option>Pre-Owned</option>
+              <option>Either — best deal</option>
+            </select>
           </div>
           <div class="pq-field">
             <label for="pq-payment">Payment Preference</label>
-            <select id="pq-payment" name="pq-payment">
+            <select id="pq-payment" name="Payment Preference">
               <option value="">— Select —</option>
               <option>Finance</option>
               <option>Lease</option>
               <option>Cash</option>
-              <option>Not Sure</option>
+              <option>Not sure</option>
             </select>
           </div>
           <div class="pq-field">
-            <label for="pq-budget">Ideal Monthly Budget</label>
-            <input type="text" id="pq-budget" name="pq-budget" placeholder="e.g. $450/mo">
+            <label for="pq-monthly">Ideal Monthly Payment</label>
+            <input type="text" id="pq-monthly" name="Ideal Monthly Payment" placeholder="e.g. $450/mo">
           </div>
           <div class="pq-field">
             <label for="pq-down">Down Payment Available</label>
-            <input type="text" id="pq-down" name="pq-down" placeholder="e.g. $2,000">
+            <input type="text" id="pq-down" name="Down Payment" placeholder="e.g. $2,000">
           </div>
         </div>
       </div>
 
+      <!-- EMPLOYMENT & INCOME -->
       <div class="pq-group">
-        <div class="pq-group-label">Financial Snapshot</div>
+        <div class="pq-group-label">Employment &amp; Income</div>
         <div class="pq-grid">
           <div class="pq-field">
             <label for="pq-employment">Employment Status</label>
-            <select id="pq-employment" name="pq-employment">
+            <select id="pq-employment" name="Employment Status">
               <option value="">— Select —</option>
-              <option>Full-Time</option>
-              <option>Part-Time</option>
+              <option>Full-Time Employed</option>
               <option>Self-Employed</option>
+              <option>Part-Time Employed</option>
               <option>Retired</option>
               <option>Other</option>
             </select>
           </div>
           <div class="pq-field">
-            <label for="pq-income">Monthly Income (gross)</label>
-            <input type="text" id="pq-income" name="pq-income" placeholder="e.g. $4,200">
+            <label for="pq-employer">Employer / Company</label>
+            <input type="text" id="pq-employer" name="Employer">
           </div>
-          <div class="pq-field full">
+          <div class="pq-field">
+            <label for="pq-employer-phone">Employer Phone Number</label>
+            <input type="tel" id="pq-employer-phone" name="Employer Phone" placeholder="954-555-0123">
+          </div>
+          <div class="pq-field">
+            <label for="pq-title">Job Title</label>
+            <input type="text" id="pq-title" name="Job Title">
+          </div>
+          <div class="pq-field">
+            <label for="pq-tenure">Time at Current Job</label>
+            <select id="pq-tenure" name="Time at Current Job">
+              <option value="">— Select —</option>
+              <option>Less than 6 months</option>
+              <option>6 months – 1 year</option>
+              <option>1 – 2 years</option>
+              <option>2 – 5 years</option>
+              <option>5+ years</option>
+            </select>
+          </div>
+          <div class="pq-field">
+            <label for="pq-income">Monthly Income (gross)</label>
+            <input type="text" id="pq-income" name="Monthly Income" placeholder="e.g. $4,200">
+          </div>
+          <div class="pq-field">
             <label for="pq-credit">Estimated Credit Score</label>
-            <select id="pq-credit" name="pq-credit">
+            <select id="pq-credit" name="Estimated Credit Score">
               <option value="">— Select —</option>
               <option>Excellent — 720+</option>
-              <option>Good — 680–719</option>
-              <option>Fair — 640–679</option>
+              <option>Good — 680 to 719</option>
+              <option>Fair — 640 to 679</option>
               <option>Below 640</option>
-              <option>Not Sure</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+          <div class="pq-field">
+            <label for="pq-tradein">Trade-In? (Year, Make, Model)</label>
+            <input type="text" id="pq-tradein" name="Trade In" placeholder="e.g. 2019 Honda Civic">
+          </div>
+          <div class="pq-field full">
+            <label for="pq-notes">Anything Else?</label>
+            <textarea id="pq-notes" name="Additional Notes" placeholder="Timeline, must-haves, questions — anything useful for Blake to know."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- CO-SIGNER -->
+      <div class="pq-group">
+        <div class="pq-group-label">Co-Signer (Optional)</div>
+        <div class="pq-grid">
+          <div class="pq-field full">
+            <label>Are you adding a co-signer?</label>
+            <div class="pq-radio-group">
+              <label class="pq-radio"><input type="radio" name="Co-Signer" value="No" checked onchange="toggleCosigner(this.value)"> No</label>
+              <label class="pq-radio"><input type="radio" name="Co-Signer" value="Yes" onchange="toggleCosigner(this.value)"> Yes</label>
+            </div>
+          </div>
+        </div>
+        <div class="pq-cosigner-fields pq-grid" id="cosignerFields" style="display:none;margin-top:16px;">
+          <div class="pq-field">
+            <label for="cs-firstname">Co-Signer First Name</label>
+            <input type="text" id="cs-firstname" name="CoSigner First Name">
+          </div>
+          <div class="pq-field">
+            <label for="cs-lastname">Co-Signer Last Name</label>
+            <input type="text" id="cs-lastname" name="CoSigner Last Name">
+          </div>
+          <div class="pq-field">
+            <label for="cs-dob">Co-Signer Date of Birth</label>
+            <input type="date" id="cs-dob" name="CoSigner Date of Birth">
+          </div>
+          <div class="pq-field">
+            <label for="cs-relationship">Relationship</label>
+            <select id="cs-relationship" name="CoSigner Relationship">
+              <option value="">— Select —</option>
+              <option>Spouse / Partner</option>
+              <option>Parent</option>
+              <option>Sibling</option>
+              <option>Other Family</option>
+              <option>Friend</option>
+            </select>
+          </div>
+          <div class="pq-field">
+            <label for="cs-ssn">Co-Signer SSN</label>
+            <input type="text" id="cs-ssn" name="CoSigner SSN" placeholder="XXX-XX-XXXX" autocomplete="off">
+          </div>
+          <div class="pq-field">
+            <label for="cs-income">Co-Signer Monthly Income</label>
+            <input type="text" id="cs-income" name="CoSigner Monthly Income" placeholder="e.g. $3,500">
+          </div>
+          <div class="pq-field">
+            <label for="cs-employment">Co-Signer Employment</label>
+            <select id="cs-employment" name="CoSigner Employment">
+              <option value="">— Select —</option>
+              <option>Full-Time Employed</option>
+              <option>Self-Employed</option>
+              <option>Part-Time</option>
+              <option>Retired</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="pq-field">
+            <label for="cs-credit">Co-Signer Credit Score</label>
+            <select id="cs-credit" name="CoSigner Credit Score">
+              <option value="">— Select —</option>
+              <option>Excellent — 720+</option>
+              <option>Good — 680 to 719</option>
+              <option>Fair — 640 to 679</option>
+              <option>Below 640</option>
+              <option>Not sure</option>
             </select>
           </div>
         </div>
       </div>
 
-      <div class="pq-group">
-        <div class="pq-group-label">Trade-In (Optional)</div>
-        <div class="pq-grid">
-          <div class="pq-field full">
-            <label for="pq-tradein">Year, Make &amp; Model</label>
-            <input type="text" id="pq-tradein" name="pq-tradein" placeholder="e.g. 2019 Honda Civic">
-          </div>
-          <div class="pq-field full">
-            <label for="pq-notes">Anything Else?</label>
-            <textarea id="pq-notes" name="pq-notes" placeholder="Timeline, must-haves, questions — whatever's useful for Blake to know."></textarea>
-          </div>
-        </div>
-      </div>
-
       <div class="pq-actions">
-        <button type="submit" class="btn btn-primary"><svg viewBox="0 0 24 24" style="width:18px;height:18px"><use href="#icon-chat"/></svg>Text My Info to Blake</button>
-        <span class="pq-confirm" id="pqConfirm" hidden>✓ Submitted! Blake will text you back shortly.</span>
+        <button type="submit" class="btn btn-primary"><svg viewBox="0 0 24 24" style="width:18px;height:18px"><use href="#icon-chat"/></svg>Submit Pre-Qualification</button>
+        <span class="pq-confirm" id="pqConfirm" hidden>✓ Submitted! Blake will be in touch within 1 business hour.</span>
         <span class="pq-error" id="pqError" hidden>Something went wrong — please try again or text Blake directly.</span>
       </div>
-      <p class="pq-fallback">Prefer to skip the form? <a href="tel:9543101052">Call</a> or <a href="sms:9543101052">text 954-310-1052</a> directly.</p>
+      <p class="pq-fallback">* Required fields. Your information is encrypted and never sold. By submitting you authorize Blake Soldit to contact you regarding your vehicle request. Prefer to call? <a href="tel:9543101052">954-310-1052</a>.</p>
     </form>
   </div>
 </section>
@@ -692,6 +870,11 @@
       // on mobile: let the sms: link open naturally
     });
   });
+
+  // co-signer toggle
+  function toggleCosigner(val) {
+    document.getElementById('cosignerFields').style.display = val === 'Yes' ? 'grid' : 'none';
+  }
 
   // pre-qualify form -> Web3Forms submission
   const pqForm = document.getElementById('pqForm');
