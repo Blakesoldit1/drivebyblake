@@ -187,8 +187,6 @@
   .pq-radio-group{display:flex;gap:24px;margin-top:6px;}
   .pq-radio{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;}
   .pq-radio input{accent-color:var(--blue);width:16px;height:16px;cursor:pointer;}
-  .pq-file-note{font-size:12px;color:var(--text-muted);margin-top:5px;display:block;}
-  .pq-field input[type="file"]{padding:8px 10px;font-size:13px;cursor:pointer;}
   .pq-cosigner-fields{display:none;}
   @media(max-width:700px){.pq-grid{grid-template-columns:1fr;}.pq-card{padding:22px;}}
 
@@ -442,7 +440,7 @@
       <p>Tell Blake what you're looking for and he'll find exactly which programs, rates, and incentives you qualify for — before you ever step into a dealership.</p>
     </div>
 
-    <form class="pq-card reveal" id="pqForm" enctype="multipart/form-data">
+    <form class="pq-card reveal" id="pqForm">
       <input type="hidden" name="access_key" value="56f5a278-c6fc-4581-9dd7-e3b62dff57e3">
       <input type="hidden" name="subject" value="New Pre-Qualification Request — Blake Soldit">
       <input type="hidden" name="from_name" value="DriveByBlake.com">
@@ -532,11 +530,7 @@
             <label for="pq-zip">ZIP Code *</label>
             <input type="text" id="pq-zip" name="ZIP Code" required autocomplete="postal-code" placeholder="33301">
           </div>
-          <div class="pq-field full">
-            <label for="pq-dl-upload">Upload Driver's License (front) — optional but recommended</label>
-            <input type="file" id="pq-dl-upload" name="Drivers License Upload" accept=".jpg,.jpeg,.png,.pdf">
-            <span class="pq-file-note">📎 Accepted: JPG, PNG, PDF — max 5MB. Securely transmitted.</span>
-          </div>
+
         </div>
       </div>
 
